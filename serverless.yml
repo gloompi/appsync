@@ -13,6 +13,10 @@ provider:
   environment:
     STAGE: ${self:custom.stage}
     AWS_NODEJS_CONNECTION_REUSE_ENABLED: "1"
+    # AWS_REGION: ${self:custom.region}
+    # COGNITO_USER_POOL_ID: !Ref CognitoUserPool
+    # WEB_COGNITO_USER_POOL_CLIENT_ID: !Ref WebUserPoolClient
+    # USERS_TABLE: !Ref UsersTable
 
 package:
   patterns:
@@ -24,6 +28,7 @@ appSync:
 
 custom:
   stage: ${opt:stage, 'dev'}
+  region: ${opt:region, self:provider.region}
 
 functions:
   confirmUserSignup:
@@ -93,6 +98,11 @@ resources:
           - ALLOW_USER_PASSWORD_AUTH
           - ALLOW_REFRESH_TOKEN_AUTH
         PreventUserExistenceErrors: ENABLED
+  
   Outputs:
+    AwsRegion:
+      Value: ${self:custom.region}
     CognitoUserPoolId:
       Value: !Ref CognitoUserPool
+    WebCognitoUserPoolClientId:
+      Value: !Ref WebUserPoolClient

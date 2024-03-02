@@ -1,6 +1,8 @@
-const chance = require('chance').Chance()
+import { Chance } from 'chance'
 
-const a_random_user = () => {
+const chance = new Chance()
+
+export const a_random_user = () => {
   const firstName = chance.first({ nationality: 'en' })
   const lastName = chance.first({ nationality: 'en' })
   const suffix = chance.string({ length: 4, pool: 'abcdefghijklmnopqrstuvwxyz' })
@@ -13,8 +15,4 @@ const a_random_user = () => {
     password,
     email,
   }
-}
-
-module.exports = {
-  a_random_user
 }

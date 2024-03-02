@@ -4,8 +4,12 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "sls": "sls"
+    "sls": "sls",
+    "exportEnv": "sls export-env --overwrite",
+    "test:integration": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --verbose ./__tests__/test_cases/integration",
+    "test:e2e": "NODE_OPTIONS=\"$NODE_OPTIONS --experimental-vm-modules\" jest --verbose ./__tests__/test_cases/e2e"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +24,10 @@
     "serverless-iam-roles-per-function": "^3.2.0"
   },
   "dependencies": {
-    "chance": "^1.1.11"
+    "@aws-sdk/client-cognito-identity-provider": "^3.525.0",
+    "@aws-sdk/client-dynamodb": "^3.525.0",
+    "@aws-sdk/lib-dynamodb": "^3.525.0",
+    "chance": "^1.1.11",
+    "dotenv": "^16.4.5"
   }
 }
