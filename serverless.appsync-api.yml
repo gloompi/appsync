@@ -7,3 +7,19 @@ authentication:
     awsRegion: eu-west-1
     defaultAction: ALLOW
     userPoolId: !Ref CognitoUserPool
+pipelineFunctions:
+  getMyProfile:
+    dataSource: usersTable
+    code: resolvers/getMyProfile.js
+resolvers:
+  Query.getMyProfile:
+    functions:
+      - getMyProfile
+
+dataSources:
+  none:
+    type: NONE
+  usersTable:
+    type: AMAZON_DYNAMODB
+    config:
+      tableName: !Ref UsersTable

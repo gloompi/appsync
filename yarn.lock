@@ -18,6 +18,11 @@
     "@jridgewell/gen-mapping" "^0.3.5"
     "@jridgewell/trace-mapping" "^0.3.24"
 
+"@aws-appsync/utils@^1.7.0":
+  version "1.7.0"
+  resolved "https://registry.yarnpkg.com/@aws-appsync/utils/-/utils-1.7.0.tgz#156b02d2a2d05baf0a45a42265a74139dc95e805"
+  integrity sha512-f17HeFa1KVZSRYCMdt0hHABf2ZJUQokikaVjx5B8udjHh7B3N0YGKyr9VcyP7c4rofC+qCsUIlQc+T5aHvJ0mg==
+
 "@aws-crypto/crc32@3.0.0":
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/@aws-crypto/crc32/-/crc32-3.0.0.tgz#07300eca214409c33e3ff769cd5697b57fdd38fa"
