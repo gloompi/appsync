@@ -30,8 +30,11 @@
     "@aws-appsync/utils": "^1.7.0",
     "@aws-sdk/client-cognito-identity-provider": "^3.525.0",
     "@aws-sdk/client-dynamodb": "^3.525.0",
+    "@aws-sdk/client-s3": "^3.525.0",
     "@aws-sdk/lib-dynamodb": "^3.525.0",
+    "@aws-sdk/s3-request-presigner": "^3.525.0",
     "chance": "^1.1.11",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "ulid": "^2.3.0"
   }
 }

@@ -7,14 +7,25 @@ authentication:
     awsRegion: eu-west-1
     defaultAction: ALLOW
     userPoolId: !Ref CognitoUserPool
+
 pipelineFunctions:
   getMyProfile:
     dataSource: usersTable
     code: resolvers/getMyProfile.js
+  editMyProfile:
+    dataSource: usersTable
+    code: resolvers/editMyProfile.js
+
 resolvers:
   Query.getMyProfile:
     functions:
       - getMyProfile
+  Query.getImageUploadUrl:
+    kind: UNIT
+    dataSource: getImageUploadUrlFunction
+  Mutation.editMyProfile:
+    functions:
+      - editMyProfile
 
 dataSources:
   none:
@@ -23,3 +34,7 @@ dataSources:
     type: AMAZON_DYNAMODB
     config:
       tableName: !Ref UsersTable
+  getImageUploadUrlFunction:
+    type: AWS_LAMBDA
+    config:
+      functionName: getImageUploadUrl

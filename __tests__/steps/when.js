@@ -5,7 +5,8 @@ import {
 } from "@aws-sdk/client-cognito-identity-provider";
 
 import { GraphQL } from '../lib/graphql'
-import { handler } from '../../functions/confirm-user-signup'
+import { handler as confirmUserSignUpHandler } from '../../functions/confirm-user-signup'
+import { handler as getUploadUrlHandler } from '../../functions/get-upload-url'
 
 export const a_user_signs_up = async (password, name, email) => {
   const cognito = new CognitoIdentityProviderClient({});
@@ -63,7 +64,22 @@ export const we_invoke_confirmUserSignup = async (username, name, email) => {
     "response": {}
   }
 
-  await handler(event, context)
+  await confirmUserSignUpHandler(event, context)
+}
+
+export const we_invoke_getImageUploadUrl = async (username, extension, contentType) => {
+  const context = {}
+  const event = {
+    identity: {
+      username
+    },
+    arguments: {
+      extension,
+      contentType
+    }
+  }
+
+  return await getUploadUrlHandler(event, context)
 }
 
 export const a_user_calls_getMyProfile = async (user) => {
@@ -92,4 +108,52 @@ export const a_user_calls_getMyProfile = async (user) => {
   console.log(`[${user.username}] - fetched profile`)
 
   return profile
+}
+
+export const a_user_calls_editMyProfile = async (user, input) => {
+  const editMyProfile = `mutation editMyProfile($input: ProfileInput!) {
+    editMyProfile(newProfile: $input) {
+      name
+      id
+      createdAt
+      bio
+      backgroundImageUrl
+      birthdate
+      followersCount
+      followingCount
+      screenName
+      location
+      likesCount
+      imageUrl
+      tweetsCount
+      website
+    }
+  }`
+  const variables = {
+    input
+  }
+
+  const data = await GraphQL(process.env.API_URL, editMyProfile, variables, user.accessToken)
+  const profile = data.editMyProfile
+
+  console.log(`[${user.username}] - edited profile`)
+
+  return profile
+}
+
+export const a_user_calls_getImageUploadUrl = async (user, extension, contentType) => {
+  const getImageUploadUrl = `query getImageUploadUrl($extension: String, $contentType: String) {
+    getImageUploadUrl(extension: $extension, contentType: $contentType)
+  }`
+  const variables = {
+    extension,
+    contentType
+  }
+
+  const data = await GraphQL(process.env.API_URL, getImageUploadUrl, variables, user.accessToken)
+  const url = data.getImageUploadUrl
+
+  console.log(`[${user.username}] - got image upload url`)
+
+  return url
 }
