@@ -26,6 +26,9 @@ resolvers:
   Mutation.editMyProfile:
     functions:
       - editMyProfile
+  Mutation.tweet:
+    kind: UNIT
+    dataSource: tweetFunction
 
 dataSources:
   none:
@@ -38,3 +41,7 @@ dataSources:
     type: AWS_LAMBDA
     config:
       functionName: getImageUploadUrl
+  tweetFunction:
+    type: AWS_LAMBDA
+    config:
+      functionName: tweet
